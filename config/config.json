@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "sisterwolf",
+    "password": null,
+    "database": "ASLStrong",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "sisterwolf",
+    "password": null,
+    "database": "ASLStrong",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "sisterwolf",
+    "password": null,
+    "database": "ASLStrong",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}

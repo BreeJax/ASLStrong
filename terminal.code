@@ -1,0 +1,25 @@
+npm install sequelize pg --save
+
+sequelize init
+
+createdb ASLStrong
+
+sequelize db:migrate
+
+sequelize model:create --name Videos --attributes 'videoURL:STRING  dominateHand:STRING nonDominateHand:STRING orientation:STRING location:STRING movement:STRING expression:STRING'
+
+sequelize db:migrate
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+sequelize db:migrate
+
+sequelize model:create --name CategoriesAndWords --attributes 'videoId:INTEGER categories:ARRAY words:ARRAY'
+
+sequelize db:migrate
+
+
+(((After doing this, add DataTypes.[[type]] to the modules that have the ARRAY)))
+
+
+this.categoryId = 27;
