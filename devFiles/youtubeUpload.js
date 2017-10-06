@@ -49,7 +49,7 @@ server.addPage("/oauth2callback", lien => {
 
     lien.end("The video is being uploaded. Check out the logs in the terminal.")
 
-    let title = "baby" || ""
+    let title = "ache" || ""
     let description = "ASL sign for " + title || "video upload via YouTube API"
 
     var req = Youtube.videos.insert(
@@ -71,7 +71,7 @@ server.addPage("/oauth2callback", lien => {
 
         // Create the readable stream to upload the video
         media: {
-          body: fs.createReadStream("../videos/baby.mp4")
+          body: fs.createReadStream("../videos/ache.mp4")
         }
       },
       (err, data) => {
@@ -88,8 +88,17 @@ server.addPage("/oauth2callback", lien => {
           })
           .save()
           .then(databaseASLStrong => {
-            console.log("good job!")
-            process.exit()
+            const newWordsAndCats = models.CategoriesAndWords
+              .build({
+                videoId: databaseASLStrong.id,
+                categories: [],
+                words: [title]
+              })
+              .save()
+              .then(databaseASLStrong2 => {
+                console.log("yay!!")
+                process.exit()
+              })
           })
           .catch(err => {
             console.log(err)
@@ -103,3 +112,6 @@ server.addPage("/oauth2callback", lien => {
     }, 250)
   })
 })
+// videoId: DataTypes.INTEGER,
+// categories: DataTypes.ARRAY(DataTypes.STRING),
+// words: DataTypes.ARRAY(DataTypes.STRING)
