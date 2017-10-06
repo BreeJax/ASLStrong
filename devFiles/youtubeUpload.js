@@ -6,6 +6,8 @@ const Logger = require("bug-killer")
 const opn = require("opn")
 const prettyBytes = require("pretty-bytes")
 
+const models = require("../models")
+
 // I downloaded the file from OAuth2 -> Download JSON
 const CREDENTIALS = readJson(`${__dirname}/credentials.json`)
 
@@ -47,7 +49,7 @@ server.addPage("/oauth2callback", lien => {
 
     lien.end("The video is being uploaded. Check out the logs in the terminal.")
 
-    let title = "a" || ""
+    let title = "baby" || ""
     let description = "ASL sign for " + title || "video upload via YouTube API"
 
     var req = Youtube.videos.insert(
@@ -69,12 +71,30 @@ server.addPage("/oauth2callback", lien => {
 
         // Create the readable stream to upload the video
         media: {
-          body: fs.createReadStream("../videos/a.mp4")
+          body: fs.createReadStream("../videos/baby.mp4")
         }
       },
       (err, data) => {
         console.log("https://www.youtube.com/watch?v=" + data.id, "Done.", data)
-        process.exit()
+        const newVideo = models.Videos
+          .build({
+            videoURL: "https://www.youtube.com/watch?v=" + data.id,
+            dominateHand: "",
+            nonDominateHand: "",
+            orientation: "",
+            location: "",
+            movement: "",
+            expression: ""
+          })
+          .save()
+          .then(databaseASLStrong => {
+            console.log("good job!")
+            process.exit()
+          })
+          .catch(err => {
+            console.log(err)
+          })
+        //TODO: create the corsponding word here and link it to the video
       }
     )
 
