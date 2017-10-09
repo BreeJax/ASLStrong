@@ -5,6 +5,8 @@ const Lien = require("lien")
 const Logger = require("bug-killer")
 const opn = require("opn")
 const prettyBytes = require("pretty-bytes")
+const path = require("path")
+const async = require("async")
 
 const models = require("../models")
 
@@ -49,67 +51,86 @@ server.addPage("/oauth2callback", lien => {
 
     lien.end("The video is being uploaded. Check out the logs in the terminal.")
 
-    let title = "ache" || ""
-    let description = "ASL sign for " + title || "video upload via YouTube API"
+    const uploadVideo = fileName => {
+      // format: apple.mp4
+      const title = fileName.replace(".mp4", "").replace(/_/g, " ")
+      const filePath = "../10/" + fileName
 
-    var req = Youtube.videos.insert(
-      {
-        resource: {
-          // Video title and description
-          snippet: {
-            categoryId: "27",
-            title: title,
-            description: description
+      let description = "ASL sign for " + title || "video upload via YouTube API"
+      var req = Youtube.videos.insert(
+        {
+          resource: {
+            // Video title and description
+            snippet: {
+              categoryId: "27",
+              title: title,
+              description: description
+            },
+            // I don't want to spam my subscribers
+            status: {
+              privacyStatus: "unlisted"
+            }
           },
-          // I don't want to spam my subscribers
-          status: {
-            privacyStatus: "unlisted"
+          // This is for the callback function
+          part: "snippet,status",
+
+          // Create the readable stream to upload the video
+          media: {
+            body: fs.createReadStream(filePath)
           }
         },
-        // This is for the callback function
-        part: "snippet,status",
-
-        // Create the readable stream to upload the video
-        media: {
-          body: fs.createReadStream("../videos/ache.mp4")
+        (err, data) => {
+          console.log(err)
+          const newVideo = models.Videos
+            .build({
+              videoURL: "https://www.youtube.com/watch?v=" + data.id,
+              dominateHand: "",
+              nonDominateHand: "",
+              orientation: "",
+              location: "",
+              movement: "",
+              expression: ""
+            })
+            .save()
+            .then(databaseASLStrong => {
+              const newWordsAndCats = models.CategoriesAndWords
+                .build({
+                  videoId: databaseASLStrong.id,
+                  categories: [],
+                  words: [title]
+                })
+                .save()
+                .then(databaseASLStrong2 => {
+                  console.log("yay!!")
+                })
+            })
+            .catch(err => {
+              console.log(err)
+            })
         }
-      },
-      (err, data) => {
-        console.log("https://www.youtube.com/watch?v=" + data.id, "Done.", data)
-        const newVideo = models.Videos
-          .build({
-            videoURL: "https://www.youtube.com/watch?v=" + data.id,
-            dominateHand: "",
-            nonDominateHand: "",
-            orientation: "",
-            location: "",
-            movement: "",
-            expression: ""
-          })
-          .save()
-          .then(databaseASLStrong => {
-            const newWordsAndCats = models.CategoriesAndWords
-              .build({
-                videoId: databaseASLStrong.id,
-                categories: [],
-                words: [title]
-              })
-              .save()
-              .then(databaseASLStrong2 => {
-                console.log("yay!!")
-                process.exit()
-              })
-          })
-          .catch(err => {
-            console.log(err)
-          })
-        //TODO: create the corsponding word here and link it to the video
-      }
-    )
+      )
 
-    setInterval(function() {
-      Logger.log(`${prettyBytes(req.req.connection._bytesDispatched)} bytes uploaded.`)
-    }, 250)
+      setInterval(function() {
+        Logger.log(`${prettyBytes(req.req.connection._bytesDispatched)} bytes uploaded.`)
+      }, 250)
+    }
+
+    // get all files in that folder
+
+    var tasks = fs
+      .readdirSync("../10")
+      .filter(file => path.extname(file) === ".mp4")
+      .map(file => {
+        return () => {
+          uploadVideo(file)
+        }
+      })
+    // loop over them and upload each one,
+    console.log("test", typeof tasks[0], tasks.length, tasks)
+    async.waterfall(tasks, err => {
+      console.log("donezo")
+      process.exit()
+    })
   })
 })
 // videoId: DataTypes.INTEGER,
