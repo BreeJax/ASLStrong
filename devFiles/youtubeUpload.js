@@ -49,9 +49,11 @@ server.addPage("/oauth2callback", lien => {
 
     oauth.setCredentials(tokens)
 
-    lien.end("The video is being uploaded. Check out the logs in the terminal.")
+    lien.end(
+      "The video is being uploaded. Check out the logs in the terminal. You're youtube thing for videos is https://www.youtube.com/my_videos?o=U&sq="
+    )
 
-    const uploadVideo = fileName => {
+    const uploadVideo = (fileName, next) => {
       // format: apple.mp4
       const title = fileName.replace(".mp4", "").replace(/_/g, " ")
       const filePath = "../10/" + fileName
@@ -102,6 +104,9 @@ server.addPage("/oauth2callback", lien => {
                 .save()
                 .then(databaseASLStrong2 => {
                   console.log("yay!!")
+                  if (next) {
+                    next()
+                  }
                 })
             })
             .catch(err => {
@@ -121,8 +126,9 @@ server.addPage("/oauth2callback", lien => {
       .readdirSync("../10")
       .filter(file => path.extname(file) === ".mp4")
       .map(file => {
-        return () => {
-          uploadVideo(file)
+        return next => {
+          console.log("You are now here")
+          uploadVideo(file, next)
         }
       })
     // loop over them and upload each one,
