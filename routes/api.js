@@ -26,7 +26,9 @@ api.get("/allwords/:id", (req, res) => {
   models.CategoriesAndWords
     .findOne({ where: { id: id }, attributes: ["words", "videoId"] })
     .then(words => {
-      res.json(words)
+      models.Videos.findOne({ where: { id: words.videoId } }).then(video => {
+        res.json({ words, video })
+      })
     })
     .catch(err => {
       console.log(err)
