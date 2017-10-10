@@ -1,6 +1,6 @@
 const express = require("express")
 const api = express.Router()
-
+const Sequelize = require("sequelize")
 const models = require("../models")
 
 /* GET users listing. */
@@ -19,6 +19,8 @@ api.get("/allwords", (req, res) => {
       console.log(err)
     })
 })
+
+// api.get("allwords/:letter", (req, res) => {})
 
 //get just the word and the video ID- after commit, adding Video info
 api.get("/allwords/:id", (req, res) => {
@@ -58,8 +60,14 @@ api.get("/categories", (req, res) => {
     })
 })
 
-// api.get("/categories", (req, res) => {
-//   models.CategoriesAndWords.findAndCountAll({ where: {categories:}})
-// })
+//Get words via category
+api.get("/categories/:category", (req, res) => {
+  const categoryWord = req.params.category
+  console.log("searching for", categoryWord)
+  const Op = Sequelize.Op
+  models.CategoriesAndWords.findOne({ where: { categories: { [Op.contains]: [categoryWord] } } }).then(info => {
+    res.json(info)
+  })
+})
 
 module.exports = api
