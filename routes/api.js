@@ -34,6 +34,8 @@ api.get("/allwords/:id", (req, res) => {
       console.log(err)
     })
 })
+
+//Getting the list of categories
 api.get("/categories", (req, res) => {
   const flatten = arr => {
     return arr.reduce(function(flat, toFlatten) {
