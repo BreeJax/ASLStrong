@@ -56,7 +56,7 @@ server.addPage("/oauth2callback", lien => {
     const uploadVideo = (fileName, next) => {
       // format: apple.mp4
       const title = fileName.replace(".mp4", "").replace(/_/g, " ")
-      const filePath = "../10/10/" + fileName
+      const filePath = "../10/" + fileName
 
       let description = "ASL sign for " + title || "video upload via YouTube API"
       var req = Youtube.videos.insert(
@@ -123,7 +123,7 @@ server.addPage("/oauth2callback", lien => {
     // get all files in that folder
 
     var tasks = fs
-      .readdirSync("../10/10")
+      .readdirSync("../10")
       .filter(file => path.extname(file) === ".mp4")
       .map(file => {
         return next => {

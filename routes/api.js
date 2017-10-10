@@ -34,5 +34,30 @@ api.get("/allwords/:id", (req, res) => {
       console.log(err)
     })
 })
+api.get("/categories", (req, res) => {
+  const flatten = arr => {
+    return arr.reduce(function(flat, toFlatten) {
+      return flat.concat(toFlatten.categories)
+    }, [])
+  }
+
+  const distinct = arr => {
+    let rv = Array.from(new Set(arr))
+    return rv
+  }
+
+  models.CategoriesAndWords
+    .findAll({ attributes: ["categories"] })
+    .then(categories => {
+      res.json(distinct(flatten(categories)))
+    })
+    .catch(err => {
+      console.log(err)
+    })
+})
+
+// api.get("/categories", (req, res) => {
+//   models.CategoriesAndWords.findAndCountAll({ where: {categories:}})
+// })
 
 module.exports = api
