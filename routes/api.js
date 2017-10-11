@@ -65,7 +65,7 @@ api.get("/categories/:category", (req, res) => {
   const categoryWord = req.params.category
   console.log("searching for", categoryWord)
   const Op = Sequelize.Op
-  models.CategoriesAndWords.findOne({ where: { categories: { [Op.contains]: [categoryWord] } } }).then(info => {
+  models.CategoriesAndWords.findAll({ where: { categories: { [Op.contains]: [categoryWord] } } }).then(info => {
     res.json(info)
   })
 })
