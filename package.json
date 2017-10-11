@@ -14,21 +14,23 @@
     "cookie-parser": "^1.4.3",
     "debug": "^3.1.0",
     "express": "^4.16.1",
+    "install": "^0.10.1",
     "lien": "^3.1.0",
     "morgan": "^1.9.0",
+    "npm": "^5.4.2",
     "opn": "^5.1.0",
     "pg": "^7.3.0",
     "pretty-bytes": "^4.0.2",
     "pug": "^2.0.0-rc.4",
     "r-json": "^1.2.8",
     "sequelize": "^4.13.5",
+    "sequelize-cli": "^3.0.0",
     "serve-favicon": "^2.4.5"
   },
   "devDependencies": {
     "async": "^2.5.0",
     "youtube-api": "^2.0.9"
   },
-  "main": "app.js",
   "author": "Bree Jackson",
   "license": "MIT"
 }
