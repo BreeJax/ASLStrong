@@ -34,7 +34,34 @@ api.get("/", (req, res) => {
     })
 })
 
-api.get("/letter/:letter", (req, res) => {})
+api.get("/letter/:letter", (req, res) => {
+  const letter = req.params.letter
+  const Op = Sequelize.Op
+
+  const sort = (a, b) => {
+    console.log({ a, b })
+    var nameA = a.toUpperCase() // ignore upper and lowercase
+    var nameB = b.toUpperCase() // ignore upper and lowercase
+    if (nameA < nameB) {
+      return -1
+    }
+    if (nameA > nameB) {
+      return 1
+    }
+
+    // names must be equal
+    return 0
+  }
+
+  models.CategoriesAndWords
+    .findAll({ where: { words: { [Op.iLike]: "b" } } })
+    .then(words => {
+      res.json(words.sort(sort))
+    })
+    .catch(err => {
+      console.log(err)
+    })
+})
 
 //Getting the list of categories
 api.get("/categories", (req, res) => {
