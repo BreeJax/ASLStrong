@@ -51,7 +51,7 @@ api.get("/categories", (req, res) => {
   }
 
   models.CategoriesAndWords
-    .findAll({ attributes: ["categories"] })
+    .findAll({ order: [["categories", "ASC"]], attributes: ["categories"] })
     .then(categories => {
       res.json(distinct(flatten(categories)))
     })
