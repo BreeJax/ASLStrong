@@ -4,8 +4,16 @@ module.exports = function(sequelize, DataTypes) {
     "CategoriesAndWords",
     {
       videoId: DataTypes.INTEGER,
-      categories: DataTypes.ARRAY(DataTypes.STRING),
-      words: DataTypes.ARRAY(DataTypes.STRING)
+      categories: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
+        allowNull: true,
+        defaultValue: "[]"
+      },
+      words: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
+        allowNull: true,
+        defaultValue: "[]"
+      }
     },
     {
       classMethods: {

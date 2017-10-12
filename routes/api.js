@@ -2,6 +2,7 @@ const express = require("express")
 const api = express.Router()
 const Sequelize = require("sequelize")
 const models = require("../models")
+const sequelize = models.sequelize
 
 ////Getting all of the words
 api.get("/", (req, res) => {
@@ -27,7 +28,7 @@ api.get("/", (req, res) => {
   models.CategoriesAndWords
     .findAll({ attributes: ["words", "videoId"] })
     .then(words => {
-      res.json(flatten(words).sort(sort))
+      res.json(words)
     })
     .catch(err => {
       console.log(err)
@@ -37,30 +38,18 @@ api.get("/", (req, res) => {
 api.get("/letter/:letter", (req, res) => {
   const letter = req.params.letter
   const Op = Sequelize.Op
+  const query =
+    'SELECT word_list.*  FROM   "CategoriesAndWords" word_list, unnest(words) unnested_word WHERE  lower(unnested_word) ILIKE :letter;'
 
-  const sort = (a, b) => {
-    console.log({ a, b })
-    var nameA = a.toUpperCase() // ignore upper and lowercase
-    var nameB = b.toUpperCase() // ignore upper and lowercase
-    if (nameA < nameB) {
-      return -1
-    }
-    if (nameA > nameB) {
-      return 1
-    }
-
-    // names must be equal
-    return 0
-  }
-
-  models.CategoriesAndWords
-    .findAll({ where: { words: { [Op.iLike]: "b" } } })
+  sequelize
+    .query(query, {
+      replacements: { letter: letter + "%" },
+      type: Sequelize.QueryTypes.SELECT
+    })
     .then(words => {
-      res.json(words.sort(sort))
+      return res.json(words)
     })
-    .catch(err => {
-      console.log(err)
-    })
+    .catch(err => res.json(err))
 })
 
 //Getting the list of categories
@@ -125,6 +114,15 @@ api.get("/categories/:category", (req, res) => {
     res.json(info)
   })
 })
+
+// api.get("/categories/:word", (req, res) => {
+//   const _word = req.params.word
+//   console.log("searching for", categoryWord)
+//   const Op = Sequelize.Op
+//   models.CategoriesAndWords.findAll({ where: { words: { [Op.contains]: [_word] } } }).then(info => {
+//     res.json(info)
+//   })
+// })
 
 ////Please see the changes git
 
