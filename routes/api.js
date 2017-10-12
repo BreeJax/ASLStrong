@@ -6,7 +6,7 @@ const sequelize = models.sequelize
 
 /**
  * @api {get} /api/allwords getting all of the words and their corresponding video Id
- * @apiName aslstrongapi
+ * @apiName get-all-words
  * @apiGroup search by English words
  *
  * @apiSuccess {Array} words Array of objects tht have words and videoId.
@@ -56,7 +56,7 @@ api.get("/allwords", (req, res) => {
 
 /**
  * @api {get} /api/letter/:letter getting all arrays with a word starting with a searched letter in it
- * @apiName aslstrongapi
+ * @apiName get-all-words-starting-with-letter
  * @apiGroup search by English words
  *
  * @apiSuccess {Array} words Array of objects tht have words and categories.
