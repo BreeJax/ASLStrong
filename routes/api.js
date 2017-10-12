@@ -54,6 +54,44 @@ api.get("/allwords", (req, res) => {
     })
 })
 
+/**
+ * @api {get} /api/letter/:letter getting all arrays with a word starting with a searched letter in it
+ * @apiName aslstrongapi
+ * @apiGroup search by English words
+ *
+ * @apiSuccess {Array} words Array of objects tht have words and categories.
+ * @apiSuccessExample {json} Success-Response:
+*     HTTP/1.1 200 OK
+*     {
+*       "words": [
+            {
+            "id": 12,
+            "videoId": 17,
+            "categories": [
+              "Nature",
+              "Geography",
+              "ASL For Baby"
+            ],
+            "words": [
+              "Beach"
+            ],{
+            "id": 21,
+            "videoId": 26,
+            "categories": [
+            "Animals"
+            ],
+            "words": [
+              "Bee"
+            ],
+            "createdAt": "2017-10-06T21:04:48.575Z",
+            "updatedAt": "2017-10-06T21:04:48.575Z"
+            },
+
+          },
+          ]
+*     }
+ */
+
 api.get("/letter/:letter", (req, res) => {
   const letter = req.params.letter
   const Op = Sequelize.Op
@@ -66,7 +104,7 @@ api.get("/letter/:letter", (req, res) => {
       type: Sequelize.QueryTypes.SELECT
     })
     .then(words => {
-      return res.json(words)
+      return res.json({ words })
     })
     .catch(err => res.json(err))
 })
