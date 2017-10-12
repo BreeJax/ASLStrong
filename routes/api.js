@@ -195,6 +195,43 @@ api.get("/word/:wordid", (req, res) => {
       console.log(err)
     })
 })
+/**
+ * @api {get} /api/categories/:category getting all of the words by their category
+ * @apiName get-all-words-by-their-category
+ * @apiGroup search by Categories
+ *
+ * @apiSuccess {Array} words Array of objects tht have words and videoId.
+ * @apiSuccessExample {json} Success-Response:
+*     HTTP/1.1 200 OK
+*     {
+        "info": [
+          {
+          "id": 30,
+          "videoId": 35,
+          "categories": [
+          "Food",
+          "ASL For Baby"
+          ],
+          "words": [
+            "Soup"
+          ],
+          "createdAt": "2017-10-07T18:45:12.518Z",
+          "updatedAt": "2017-10-07T18:45:12.518Z"
+          },
+        {
+        "id": 35,
+        "videoId": 40,
+        "categories": [
+        "Food"
+        ],
+        "words": [
+          "Sour"
+        ],
+        "createdAt": "2017-10-07T18:45:14.017Z",
+        "updatedAt": "2017-10-07T18:45:14.017Z"
+        },*
+      }
+ */
 
 //Get words the belong to a particular category
 api.get("/categories/:category", (req, res) => {
@@ -202,7 +239,7 @@ api.get("/categories/:category", (req, res) => {
   console.log("searching for", categoryWord)
   const Op = Sequelize.Op
   models.CategoriesAndWords.findAll({ where: { categories: { [Op.contains]: [categoryWord] } } }).then(info => {
-    res.json(info)
+    res.json({ info })
   })
 })
 
