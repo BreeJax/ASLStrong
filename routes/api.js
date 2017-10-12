@@ -7,10 +7,21 @@ const sequelize = models.sequelize
 /**
  * @api {get} /api/allwords getting all of the words and their corresponding video Id
  * @apiName aslstrongapi
- * @apiGroup Something
+ * @apiGroup search by English words
  *
- * @apiSuccess {String} firstname Firstname of the User.
- * @apiSuccess {String} lastname  Lastname of the User.
+ * @apiSuccess {Array} words Array of objects tht have words and videoId.
+ * @apiSuccessExample {json} Success-Response:
+*     HTTP/1.1 200 OK
+*     {
+*       "words": [
+          {
+            "words": [
+              "point of interest"
+            ],
+            "videoId": 41
+            }
+          ]
+*     }
  */
 ////Getting all of the words
 api.get("/allwords", (req, res) => {
@@ -36,7 +47,7 @@ api.get("/allwords", (req, res) => {
   models.CategoriesAndWords
     .findAll({ attributes: ["words", "videoId"] })
     .then(words => {
-      res.json(words)
+      res.json({ words })
     })
     .catch(err => {
       console.log(err)
