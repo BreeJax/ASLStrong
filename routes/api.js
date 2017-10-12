@@ -4,8 +4,16 @@ const Sequelize = require("sequelize")
 const models = require("../models")
 const sequelize = models.sequelize
 
+/**
+ * @api {get} /api/allwords getting all of the words and their corresponding video Id
+ * @apiName aslstrongapi
+ *
+ *
+ * @apiSuccess {String} firstname Firstname of the User.
+ * @apiSuccess {String} lastname  Lastname of the User.
+ */
 ////Getting all of the words
-api.get("/", (req, res) => {
+api.get("/allwords", (req, res) => {
   const flatten = arr => {
     return arr.reduce(function(flat, toFlatten) {
       return flat.concat(toFlatten.words)

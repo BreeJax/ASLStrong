@@ -1,6 +1,11 @@
 {
   "name": "aslstrong",
   "version": "1.0.0",
+  "description": "api for ASLStrong",
+  "apidoc": {
+    "title": "Custom apiDoc browser title",
+    "url": "https://aslstrongapi.herokuapp.com/apidoc"
+  },
   "private": true,
   "scripts": {
     "start": "node ./bin/www",

@@ -23,3 +23,8 @@ sequelize db:migrate
 
 
 this.categoryId = 27;
+
+
+#For docs
+
+apidoc -i . -o ASLStrong/ -f /routes/
