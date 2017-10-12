@@ -179,6 +179,35 @@ api.get("/categories", (req, res) => {
       res.json(err)
     })
 })
+/**
+ * @api {get} /api/word/:wordid getting specific word array and all info associated with it by it's specific id (not including category).
+ * @apiName get-all-words-by-id-with-url-and-HOLMEs
+ * @apiGroup search by English words
+ *
+ * @apiSuccess {Array} words Array of objects tht have words and categories.
+ * @apiSuccessExample {json} Success-Response:
+*     HTTP/1.1 200 OK
+{
+  "words": {
+    "words": [
+      "yard measurement"
+      ],
+      "videoId": 111
+      },
+      "video": {
+        "id": 111,
+        "videoURL": "https://www.youtube.com/watch?v=OzRwnJEjXBU",
+        "dominateHand": "",
+        "nonDominateHand": "",
+        "orientation": "",
+        "location": "",
+        "movement": "",
+        "expression": "",
+        "createdAt": "2017-10-09T16:04:35.443Z",
+        "updatedAt": "2017-10-09T16:04:35.443Z"
+      }
+}
+ */
 
 //get just the word and the video ID- after commit, adding Video info
 api.get("/word/:wordid", (req, res) => {
@@ -206,11 +235,11 @@ api.get("/word/:wordid", (req, res) => {
 *     {
         "info": [
           {
-          "id": 30,
-          "videoId": 35,
-          "categories": [
-          "Food",
-          "ASL For Baby"
+            "id": 30,
+            "videoId": 35,
+            "categories": [
+            "Food",
+            "ASL For Baby"
           ],
           "words": [
             "Soup"
