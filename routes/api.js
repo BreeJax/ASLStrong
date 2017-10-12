@@ -5,7 +5,7 @@ const models = require("../models")
 const sequelize = models.sequelize
 
 /**
- * @api {get} /api/allwords getting all of the words and their corresponding video Id
+ * @api {get} /api/allwords getting all of the words(in array form) and their corresponding video Id, along with their categories(in array form)
  * @apiName get-all-words
  * @apiGroup search by English words
  *
@@ -25,27 +25,8 @@ const sequelize = models.sequelize
  */
 ////Getting all of the words
 api.get("/allwords", (req, res) => {
-  const flatten = arr => {
-    return arr.reduce(function(flat, toFlatten) {
-      return flat.concat(toFlatten.words)
-    }, [])
-  }
-  const sort = (a, b) => {
-    console.log({ a, b })
-    var nameA = a.toUpperCase() // ignore upper and lowercase
-    var nameB = b.toUpperCase() // ignore upper and lowercase
-    if (nameA < nameB) {
-      return -1
-    }
-    if (nameA > nameB) {
-      return 1
-    }
-
-    // names must be equal
-    return 0
-  }
   models.CategoriesAndWords
-    .findAll({ attributes: ["words", "videoId"] })
+    .findAll({ attributes: ["words", "videoId", "categories"] })
     .then(words => {
       res.json({ words })
     })
@@ -280,7 +261,5 @@ api.get("/categories/:category", (req, res) => {
 //     res.json(info)
 //   })
 // })
-
-////Please see the changes git
 
 module.exports = api
