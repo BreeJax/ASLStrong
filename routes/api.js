@@ -7,7 +7,7 @@ const sequelize = models.sequelize
 /**
  * @api {get} /api/allwords getting all of the words and their corresponding video Id
  * @apiName aslstrongapi
- *
+ * @apiGroup Something
  *
  * @apiSuccess {String} firstname Firstname of the User.
  * @apiSuccess {String} lastname  Lastname of the User.
