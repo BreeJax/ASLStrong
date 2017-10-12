@@ -108,6 +108,40 @@ api.get("/letter/:letter", (req, res) => {
     })
     .catch(err => res.json(err))
 })
+/**
+ * @api {get} /api/categories getting all available categories found in the table
+ * @apiName get-all-categories-in-table
+ * @apiGroup search by Categories
+ *
+ * @apiSuccess {Array} words Array of words that belong to Categories- non repeating.
+ * @apiSuccessExample {json} Success-Response:
+*     HTTP/1.1 200 OK
+*
+*       [
+          "Alphabet",
+          "Animals",
+          "ASL For Baby",
+          "Baby",
+          "Body",
+          "Clothes",
+          "Country",
+          "Family",
+          "Food",
+          "Geography",
+          "Health",
+          "Holidays",
+          "House",
+          "Music",
+          "Nature",
+          "occupations",
+          "Recreation",
+          "Religious",
+          "School",
+          "Time",
+          "Wedding"
+        ]
+*
+ */
 
 //Getting the list of categories
 api.get("/categories", (req, res) => {
