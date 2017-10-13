@@ -1,7 +1,7 @@
 {
   "name": "aslstrong",
   "version": "1.0.0",
-  "description": "api for ASLStrong",
+  "description": "creating a website for ASL videos",
   "apidoc": {
     "title": "Custom apiDoc browser title",
     "url": "https://aslstrongapi.herokuapp.com"
@@ -13,12 +13,12 @@
     "gen-docs": "apidoc -i . -o public/apidoc/ -f /routes/",
     "deploy": "git push heroku master"
   },
-  "description": "creating a website for ASL videos",
   "main": "app.js",
   "dependencies": {
     "body-parser": "^1.18.2",
     "bug-killer": "^4.4.4",
     "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
     "debug": "^3.1.0",
     "express": "^4.16.1",
     "install": "^0.10.1",

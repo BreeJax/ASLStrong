@@ -4,6 +4,7 @@ var favicon = require("serve-favicon")
 var logger = require("morgan")
 var cookieParser = require("cookie-parser")
 var bodyParser = require("body-parser")
+let cores = require("cors")
 
 var index = require("./routes/index")
 var api = require("./routes/api")
@@ -47,6 +48,16 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*")
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
   next()
+})
+
+app.use(cors())
+
+app.get("/products/:id", function(req, res, next) {
+  res.json({ msg: "This is CORS-enabled for all origins!" })
+})
+
+app.listen(80, function() {
+  console.log("CORS-enabled web server listening on port 80")
 })
 
 module.exports = app
