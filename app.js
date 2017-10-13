@@ -4,13 +4,14 @@ var favicon = require("serve-favicon")
 var logger = require("morgan")
 var cookieParser = require("cookie-parser")
 var bodyParser = require("body-parser")
-let cors = require("express-cors")
+let cors = require("cors")
 // var cors = require("express-cors")
 
 var index = require("./routes/index")
 var api = require("./routes/api")
 
 var app = express()
+app.use(cors())
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"))
@@ -56,11 +57,11 @@ app.use(function(err, req, res, next) {
 // app.get("/products/:id", function(req, res, next) {
 //   res.json({ msg: "This is CORS-enabled for all origins!" })
 // })
-app.use(
-  cors({
-    allowedOrigins: ["*"]
-  })
-)
+// app.use(
+//   cors({
+//     allowedOrigins: ["*"]
+//   })
+// )
 
 // app.listen(3000, function() {
 //   console.log("CORS-enabled web server listening on port 80")
