@@ -4,7 +4,7 @@ var favicon = require("serve-favicon")
 var logger = require("morgan")
 var cookieParser = require("cookie-parser")
 var bodyParser = require("body-parser")
-let cors = require("cors")
+let cors = require("express-cors")
 // var cors = require("express-cors")
 
 var index = require("./routes/index")
@@ -45,11 +45,11 @@ app.use(function(err, req, res, next) {
   res.render("error")
 })
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*")
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
-  next()
-})
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*")
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+//   next()
+// })
 
 app.use(cors())
 
