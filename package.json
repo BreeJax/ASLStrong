@@ -31,6 +31,7 @@
     "pretty-bytes": "^4.0.2",
     "pug": "^2.0.0-rc.4",
     "r-json": "^1.2.8",
+    "request": "^2.83.0",
     "sequelize": "^4.13.5",
     "sequelize-cli": "^3.0.0",
     "serve-favicon": "^2.4.5"

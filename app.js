@@ -51,11 +51,16 @@ app.use(function(err, req, res, next) {
 //   next()
 // })
 
-app.use(cors())
-
-app.get("/products/:id", function(req, res, next) {
-  res.json({ msg: "This is CORS-enabled for all origins!" })
-})
+// app.use(cors())
+//
+// app.get("/products/:id", function(req, res, next) {
+//   res.json({ msg: "This is CORS-enabled for all origins!" })
+// })
+app.use(
+  cors({
+    allowedOrigins: ["*"]
+  })
+)
 
 // app.listen(3000, function() {
 //   console.log("CORS-enabled web server listening on port 80")
