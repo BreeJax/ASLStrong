@@ -9,7 +9,6 @@ const sequelize = models.sequelize
  * @apiName get-all-words
  * @apiGroup search by English words
  *
- * @apiSuccess {Array} words Array of objects tht have words and videoId.
  * @apiSuccessExample {json} Success-Response:
 *     HTTP/1.1 200 OK
 *     {
@@ -40,7 +39,6 @@ api.get("/allwords", (req, res) => {
  * @apiName get-all-words-starting-with-letter
  * @apiGroup search by English words
  *
- * @apiSuccess {Array} words Array of objects tht have words and categories.
  * @apiSuccessExample {json} Success-Response:
 *     HTTP/1.1 200 OK
 *     {
@@ -94,7 +92,6 @@ api.get("/letter/:letter", (req, res) => {
  * @apiName get-all-categories-in-table
  * @apiGroup search by Categories
  *
- * @apiSuccess {Array} words Array of words that belong to Categories- non repeating.
  * @apiSuccessExample {json} Success-Response:
 *     HTTP/1.1 200 OK
 *
@@ -165,7 +162,6 @@ api.get("/categories", (req, res) => {
  * @apiName get-all-words-by-id-with-url-and-HOLMEs
  * @apiGroup search by English words
  *
- * @apiSuccess {Array} words Array of objects tht have words and categories.
  * @apiSuccessExample {json} Success-Response:
 *     HTTP/1.1 200 OK
 {
@@ -206,11 +202,54 @@ api.get("/word/:wordid", (req, res) => {
     })
 })
 /**
+ * @api {get} /api/video/:videoId getting specific video by it's ID alone with it's accociated HOLMEs
+ * @apiName get-all-videos-by-id-with-url-and-HOLMEs
+ * @apiGroup search by video
+ *
+ * @apiSuccessExample {json} Success-Response:
+*     HTTP/1.1 200 OK
+{
+    "video": {
+        "id": 55,
+        "videoURL": "https://www.youtube.com/watch?v=0ubfxNNU8V4",
+        "dominateHand": "",
+        "nonDominateHand": "",
+        "orientation": "",
+        "location": "",
+        "movement": "",
+        "expression": ""
+    }
+}
+*/
+api.get("/video/:videoId", (req, res) => {
+  const id = parseInt(req.params.videoId)
+
+  models.Videos
+    .findOne({
+      where: { id: id },
+      attributes: [
+        "id",
+        "videoURL",
+        "dominateHand",
+        "nonDominateHand",
+        "orientation",
+        "location",
+        "movement",
+        "expression"
+      ]
+    })
+    .then(video => {
+      res.json({ video })
+    })
+    .catch(err => {
+      console.log(err)
+    })
+})
+/**
  * @api {get} /api/categories/:category getting all of the words by their category
  * @apiName get-all-words-by-their-category
  * @apiGroup search by Categories
  *
- * @apiSuccess {Array} words Array of objects tht have words and videoId.
  * @apiSuccessExample {json} Success-Response:
 *     HTTP/1.1 200 OK
 *     {

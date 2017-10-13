@@ -46,25 +46,4 @@ app.use(function(err, req, res, next) {
   res.render("error")
 })
 
-// app.use(function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*")
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
-//   next()
-// })
-
-// app.use(cors())
-//
-// app.get("/products/:id", function(req, res, next) {
-//   res.json({ msg: "This is CORS-enabled for all origins!" })
-// })
-// app.use(
-//   cors({
-//     allowedOrigins: ["*"]
-//   })
-// )
-
-// app.listen(3000, function() {
-//   console.log("CORS-enabled web server listening on port 80")
-// })
-
 module.exports = app
