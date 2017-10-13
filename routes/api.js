@@ -35,6 +35,59 @@ api.get("/allwords", (req, res) => {
 })
 
 /**
+ * @api {get} /api/allvideos getting all of the videos and their info
+ * @apiName get-all-videos
+ * @apiGroup search by videos
+ *
+ * @apiSuccessExample {json} Success-Response:
+*     HTTP/1.1 200 OK
+{
+    "allVideos": [
+        {
+            "id": 9,
+            "videoURL": "https://www.youtube.com/watch?v=uNXWky8UgQA",
+            "dominateHand": "",
+            "nonDominateHand": "",
+            "orientation": "",
+            "location": "",
+            "movement": "",
+            "expression": ""
+        },
+        {
+            "id": 11,
+            "videoURL": "https://www.youtube.com/watch?v=jjq3R0Q8KHs",
+            "dominateHand": "",
+            "nonDominateHand": "",
+            "orientation": "",
+            "location": "",
+            "movement": "",
+            "expression": ""
+        },
+        { */
+////Getting all of the words
+api.get("/allvideos", (req, res) => {
+  models.Videos
+    .findAll({
+      attributes: [
+        "id",
+        "videoURL",
+        "dominateHand",
+        "nonDominateHand",
+        "orientation",
+        "location",
+        "movement",
+        "expression"
+      ]
+    })
+    .then(allVideos => {
+      res.json({ allVideos })
+    })
+    .catch(err => {
+      console.log(err)
+    })
+})
+
+/**
  * @api {get} /api/letter/:letter getting all arrays with a word starting with a searched letter in it
  * @apiName get-all-words-starting-with-letter
  * @apiGroup search by English words
