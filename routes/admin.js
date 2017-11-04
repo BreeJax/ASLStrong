@@ -4,7 +4,7 @@ const Sequelize = require("sequelize")
 const models = require("../models")
 const sequelize = models.sequelize
 
-admin.get("/addVideo", function(req, res, next) {
+admin.get("/addVideo", (req, res) => {
   res.render("adminAddVideo", { title: "Express" })
 })
 
